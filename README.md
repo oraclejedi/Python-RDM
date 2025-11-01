@@ -23,9 +23,11 @@ The script takes several arguments:
 
 # Sample:
 add two RDMs to a single VM.
+
 $ python vm_rdm.py -v vcenter.mydomain.com -u username -g my_oracle_vm -d 81F096D1C1642A69026029C0,81F096D1C1642A69026029C1 -r -a a
 
 add two shared RDMs to two VMs (e.g. Oracle RAC)
+
 $ python vm_rdm.py -v vcenter.mydomain.com -u username -g my-oradb-rac01,my-oradb-rac02 -d 81F096D1C1642A69026029C0,81F096D1C1642A69026029C1 -a a -r -s
 
 
