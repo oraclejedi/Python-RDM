@@ -1,18 +1,18 @@
 # Python-RDM
 Python script to add or remove RDMs from a VMware guest VM
 
-Note: This script uses the pypureclient Python library.
+Note: This script uses the pyVmomi Python library.
+Note: This script uses the pyVim Python library.
+
 Theory of Operation:
-This script is designed to use the "pod-clone" feature of a Pure Storage Flash Array to quickly clone a pod with an exported NFS file system.
+This script is designed to quickly add or remove RDMs from a VMware guest VM.
 
-The snapshot functionality of Purity's FA file delivers a read-only copy of the files in the file system. To provide a writeable copy, the file system needs to be put into a pod, and then cloned, and re-exported. The pod-clone functionalty is instant and consumes minimal space as the two exported file systems are fully deduplicated. This script automates the entire process.
+RDMs are one option to add storage to a VM.  Whereas there are pros and cons to each choice, RDMs have the advantage of being hypervisor, OS and storage agnostic.  They also allow the full funcitonality of the underlying stoage array to be exposed to the VM.
 
-After the pod has been cloned and exported, the exported file systems may be mounted in the guest OS.
-
-#Usage:
+# Usage:
 The script takes several arguments:
 
-- -v
+- -v FQDN for vCenter
 - -u username to log into vCenter
 - -p password to log into vCenter (of not specified the script will prompt for it)
 - -g the names of the VMs to which the RDMs will be added.  this can be a comma seperated list
@@ -23,10 +23,10 @@ The script takes several arguments:
 
 # Sample:
 add two RDMs to a single VM.
-$ python vm_rdm.py -v myesxiserver -u username -g my_oracle_vm -d 81F096D1C1642A69026029C0,81F096D1C1642A69026029C1 -r -a a
+$ python vm_rdm.py -v vcenter.mydomain.com -u username -g my_oracle_vm -d 81F096D1C1642A69026029C0,81F096D1C1642A69026029C1 -r -a a
 
 add two shared RDMs to two VMs (e.g. Oracle RAC)
-$ python vm_rdm.py -v myesxiserver -u username -g my-oradb-rac01,my-oradb-rac02 -d 81F096D1C1642A69026029C0,81F096D1C1642A69026029C1 -a a -r -s
+$ python vm_rdm.py -v vcenter.mydomain.com -u username -g my-oradb-rac01,my-oradb-rac02 -d 81F096D1C1642A69026029C0,81F096D1C1642A69026029C1 -a a -r -s
 
 
 # Safety Lock
